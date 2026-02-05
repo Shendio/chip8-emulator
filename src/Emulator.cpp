@@ -1,6 +1,8 @@
 #include "Emulator.hpp"
 
+#include <chrono>
 #include <optional>
+#include <thread>
 
 #include <SDL3/SDL.h>
 
@@ -80,10 +82,19 @@ std::expected<void, std::string> Emulator::init() {
 }
 
 void Emulator::run() {
+    using namespace std::chrono_literals;
+    constexpr auto desired_frame_time = 16.67ms;
     while (m_running) {
+        const auto frame_start = std::chrono::high_resolution_clock::now();
+
         handle_events();
         update();
         render();
+
+        const auto frame_time = std::chrono::high_resolution_clock::now() - frame_start;
+        if (desired_frame_time > frame_time) {
+            std::this_thread::sleep_for(desired_frame_time - frame_time);
+        }
     }
 }
 
