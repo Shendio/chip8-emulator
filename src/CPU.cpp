@@ -170,7 +170,18 @@ void CPU::op_4xxx() {
         s.pc += 2;
     }
 }
-void op_5xxx();
+
+void CPU::op_5xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t vy = get_y();
+
+    if (s.v[vx] == s.v[vy]) {
+        s.pc += 2;
+    }
+}
+
 void op_6xxx();
 void op_7xxx();
 void op_8xxx();
