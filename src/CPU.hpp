@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <expected>
 #include <filesystem>
+#include <random>
 #include <string>
 
 class CPU {
@@ -43,6 +44,10 @@ private:
     };
 
     State m_state;
+
+    std::random_device rd{};
+    std::mt19937 m_rng_gen{rd()};
+    std::uniform_int_distribution<uint8_t> m_rng_dist{};
 
     uint8_t get_x() const { return (m_state.opcode & 0x0F00) >> 8; }
     uint8_t get_y() const { return (m_state.opcode & 0x00F0) >> 4; }

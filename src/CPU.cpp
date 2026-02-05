@@ -283,7 +283,11 @@ void CPU::op_Bxxx() {
     s.pc = addr + s.v[0x0];
 }
 
-void op_Cxxx();
+void CPU::op_Cxxx() {
+    auto& s = m_state;
+
+    uint8_t random_number = m_rng_dist(m_rng_gen);
+}
 void op_Dxxx();
 void op_Exxx();
 void op_Fxxx();
