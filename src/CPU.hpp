@@ -3,6 +3,9 @@
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <expected>
+#include <filesystem>
+#include <string>
 
 class CPU {
 private:
@@ -20,6 +23,9 @@ private:
 
 public:
     CPU();
+
+    std::expected<void, std::string> load_rom(const std::filesystem::path* rom_path);
+    void step();
 
 private:
     struct State {
