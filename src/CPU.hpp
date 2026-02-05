@@ -32,7 +32,7 @@ public:
 private:
     struct State {
         std::array<uint8_t, s_memory_size> memory{};
-        std::array<bool, s_display_width * s_display_height> display{};
+        std::array<uint8_t, s_display_width * s_display_height> display{};
         std::array<uint16_t, 16> stack{};
         std::array<uint8_t, 16> v{};
         uint16_t pc = s_start_address;
