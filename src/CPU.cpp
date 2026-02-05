@@ -132,7 +132,14 @@ void CPU::op_0xxx() {
         break;
     }
 }
-void op_1xxx();
+
+void CPU::op_1xxx() {
+    auto& s = m_state;
+
+    uint16_t addr = (s.opcode & 0xFFF) << 4;
+    s.pc = addr;
+}
+
 void op_2xxx();
 void op_3xxx();
 void op_4xxx();
