@@ -20,6 +20,12 @@ std::expected<void, std::string> Emulator::init() {
         return std::unexpected(error_message);
     }
 
+    // todo: don't hardcode the path, load the rom specified by the user
+    if (auto result = m_cpu.load_rom("/home/shendio/Downloads/tetris.ch8"); !result) {
+        error_message = result.error();
+        return std::unexpected(error_message);
+    }
+
     m_running = true;
     return {};
 }
@@ -52,7 +58,8 @@ void Emulator::handle_events() {
 }
 
 void Emulator::update() {
-    // todo: run the emulator here
+    // todo: do multiple instructions per frame, number of which is chosen by the user
+    m_cpu.step();
 }
 
 void Emulator::render() {

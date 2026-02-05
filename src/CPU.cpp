@@ -2,6 +2,7 @@
 
 #include <format>
 #include <fstream>
+#include <print>
 #include <vector>
 
 CPU::CPU() {
@@ -48,4 +49,14 @@ std::expected<void, std::string> CPU::load_rom(const std::filesystem::path& rom_
     }
 
     return {};
+}
+
+void CPU::step() {
+    auto& s = m_state;
+
+    s.opcode = (s.memory[s.pc] << 8) | s.memory[s.pc + 1];
+    s.pc += 2;
+
+    // debug
+    std::println("Current opcode: {:x}", s.opcode);
 }

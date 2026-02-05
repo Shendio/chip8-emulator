@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CPU.hpp"
+
 #include <expected>
 #include <string>
 
@@ -18,6 +20,8 @@ private:
     void handle_events();
     void update();
     void render();
+
+    CPU m_cpu;
 
     // SDL objects
     SDL_Window* m_window;
