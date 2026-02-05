@@ -41,7 +41,7 @@ private:
         std::array<uint8_t, 16> v{};
         uint16_t pc = s_start_address;
         uint16_t opcode{};
-        uint8_t i{};
+        uint16_t i{};
         uint8_t sp{};
         uint8_t delay_timer{};
         uint8_t sound_timer{};
