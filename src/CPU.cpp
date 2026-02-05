@@ -2,7 +2,6 @@
 
 #include <format>
 #include <fstream>
-#include <print>
 #include <vector>
 
 CPU::CPU() {
@@ -57,6 +56,75 @@ void CPU::step() {
     s.opcode = (s.memory[s.pc] << 8) | s.memory[s.pc + 1];
     s.pc += 2;
 
-    // debug
-    std::println("Current opcode: {:x}", s.opcode);
+    uint16_t type = (s.opcode & 0xF000) << 12;
+
+    switch (type) {
+    case 0x0000:
+        op_0xxx();
+        break;
+    case 0x1000:
+        op_1xxx();
+        break;
+    case 0x2000:
+        op_2xxx();
+        break;
+    case 0x3000:
+        op_3xxx();
+        break;
+    case 0x4000:
+        op_4xxx();
+        break;
+    case 0x5000:
+        op_5xxx();
+        break;
+    case 0x6000:
+        op_6xxx();
+        break;
+    case 0x7000:
+        op_7xxx();
+        break;
+    case 0x8000:
+        op_8xxx();
+        break;
+    case 0x9000:
+        op_9xxx();
+        break;
+    case 0xA000:
+        op_Axxx();
+        break;
+    case 0xB000:
+        op_Bxxx();
+        break;
+    case 0xC000:
+        op_Cxxx();
+        break;
+    case 0xD000:
+        op_Dxxx();
+        break;
+    case 0xE000:
+        op_Exxx();
+        break;
+    case 0xF000:
+        op_Fxxx();
+        break;
+    default:
+        break;
+    }
 }
+
+void op_0xxx();
+void op_1xxx();
+void op_2xxx();
+void op_3xxx();
+void op_4xxx();
+void op_5xxx();
+void op_6xxx();
+void op_7xxx();
+void op_8xxx();
+void op_9xxx();
+void op_Axxx();
+void op_Bxxx();
+void op_Cxxx();
+void op_Dxxx();
+void op_Exxx();
+void op_Fxxx();
