@@ -323,6 +323,11 @@ void CPU::op_Dxxx() {
             if (sprite_pixel) {
                 uint8_t screen_x = pos_x + col;
                 uint8_t screen_y = pos_y + row;
+
+                if (screen_x >= 64 || screen_y >= 32) {
+                    continue;
+                }
+
                 uint16_t pixel_index = s_display_width * screen_y + screen_x;
 
                 if (s.display[pixel_index]) {
