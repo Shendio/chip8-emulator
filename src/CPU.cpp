@@ -122,7 +122,7 @@ void CPU::op_0xxx() {
 
     switch (s.opcode & 0xFF) {
     case 0xE0:
-        s.display.fill(false);
+        s.display.fill(0);
         m_draw_flag = true;
         break;
     case 0xEE:
