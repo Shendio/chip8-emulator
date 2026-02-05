@@ -182,7 +182,15 @@ void CPU::op_5xxx() {
     }
 }
 
-void op_6xxx();
+void CPU::op_6xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t kk = s.opcode & 0xFF;
+
+    s.v[vx] = kk;
+}
+
 void op_7xxx();
 void op_8xxx();
 void op_9xxx();
