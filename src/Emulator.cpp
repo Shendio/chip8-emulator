@@ -26,6 +26,8 @@ std::expected<void, std::string> Emulator::init() {
         return std::unexpected(error_message);
     }
 
+    SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
+
     // todo: don't hardcode the path, load the rom specified by the user
     if (auto result = m_cpu.load_rom("/home/shendio/Downloads/2-ibm-logo.ch8"); !result) {
         error_message = result.error();
