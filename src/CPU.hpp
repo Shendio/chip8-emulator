@@ -39,6 +39,7 @@ private:
         std::array<uint8_t, s_display_width * s_display_height> display{};
         std::array<uint16_t, 16> stack{};
         std::array<uint8_t, 16> v{};
+        std::array<bool, 16> key_state{};
         uint16_t pc = s_start_address;
         uint16_t opcode{};
         uint16_t i{};
