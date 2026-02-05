@@ -1,8 +1,11 @@
 #include "Emulator.hpp"
 
 #include <SDL3/SDL.h>
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_render.h>
 
 Emulator::~Emulator() {
+    SDL_DestroyTexture(m_texture);
     SDL_DestroyRenderer(m_renderer);
     SDL_DestroyWindow(m_window);
     SDL_Quit();
@@ -16,6 +19,11 @@ std::expected<void, std::string> Emulator::init() {
     }
 
     if (!SDL_CreateWindowAndRenderer(s_title.data(), s_width, s_height, 0, &m_window, &m_renderer)) {
+        error_message = SDL_GetError();
+        return std::unexpected(error_message);
+    }
+
+    if (m_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32); !m_texture) {
         error_message = SDL_GetError();
         return std::unexpected(error_message);
     }

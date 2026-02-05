@@ -7,6 +7,7 @@
 
 struct SDL_Window;
 struct SDL_Renderer;
+struct SDL_Texture;
 
 class Emulator {
 public:
@@ -26,6 +27,7 @@ private:
     // SDL objects
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
+    SDL_Texture* m_texture;
 
     // constants
     static constexpr int s_width = 1280;
