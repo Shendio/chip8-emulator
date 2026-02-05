@@ -12,6 +12,8 @@ private:
     static constexpr size_t s_display_width = 64;
     static constexpr size_t s_display_height = 32;
 
+    static constexpr size_t s_memory_size = 4096;
+    static constexpr size_t s_reserved_memory = 512;
     static constexpr size_t s_font_size = 80;
     static constexpr size_t s_start_address = 0x200;
 
@@ -29,7 +31,7 @@ public:
 
 private:
     struct State {
-        std::array<uint8_t, 4096> memory{};
+        std::array<uint8_t, s_memory_size> memory{};
         std::array<bool, s_display_width * s_display_height> display{};
         std::array<uint16_t, 16> stack{};
         std::array<uint8_t, 16> v{};
