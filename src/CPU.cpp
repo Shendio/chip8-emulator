@@ -267,7 +267,14 @@ void CPU::op_9xxx() {
     }
 }
 
-void op_Axxx();
+void CPU::op_Axxx() {
+    auto& s = m_state;
+
+    uint16_t addr = (s.opcode & 0xFFF) >> 4;
+
+    s.i = addr;
+}
+
 void op_Bxxx();
 void op_Cxxx();
 void op_Dxxx();
