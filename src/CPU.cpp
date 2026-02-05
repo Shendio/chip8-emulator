@@ -191,7 +191,15 @@ void CPU::op_6xxx() {
     s.v[vx] = kk;
 }
 
-void op_7xxx();
+void CPU::op_7xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t kk = s.opcode & 0xFF;
+
+    s.v[vx] = s.v[vx] + kk;
+}
+
 void op_8xxx();
 void op_9xxx();
 void op_Axxx();
