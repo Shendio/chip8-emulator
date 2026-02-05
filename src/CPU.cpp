@@ -286,8 +286,13 @@ void CPU::op_Bxxx() {
 void CPU::op_Cxxx() {
     auto& s = m_state;
 
+    uint8_t vx = get_x();
+    uint8_t kk = s.opcode & 0xFF;
     uint8_t random_number = m_rng_dist(m_rng_gen);
+
+    s.v[vx] = random_number & kk;
 }
+
 void op_Dxxx();
 void op_Exxx();
 void op_Fxxx();
