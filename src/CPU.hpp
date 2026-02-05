@@ -29,6 +29,9 @@ public:
     std::expected<void, std::string> load_rom(const std::filesystem::path& rom_path);
     void step();
 
+    bool get_draw_flag() const { return m_draw_flag; }
+    void reset_draw_flag() { m_draw_flag = 0; }
+
 private:
     struct State {
         std::array<uint8_t, s_memory_size> memory{};
@@ -52,8 +55,6 @@ private:
 
     uint8_t get_x() const { return (m_state.opcode & 0x0F00) >> 8; }
     uint8_t get_y() const { return (m_state.opcode & 0x00F0) >> 4; }
-    bool get_draw_flag() const { return m_draw_flag; }
-    void reset_draw_flag() { m_draw_flag = 0; }
 
     void op_noop();
     // clang-format off
