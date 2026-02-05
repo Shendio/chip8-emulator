@@ -293,6 +293,62 @@ void CPU::op_Cxxx() {
     s.v[vx] = random_number & kk;
 }
 
-void op_Dxxx();
-void op_Exxx();
-void op_Fxxx();
+void CPU::op_Dxxx() {
+    // todo: handle drawing
+    op_noop();
+}
+
+void CPU::op_Exxx() {
+    // todo: handle input
+    op_noop();
+}
+
+void CPU::op_Fxxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+
+    switch (s.opcode & 0xFF) {
+    case 0x7:
+        s.v[vx] = s.delay_timer;
+        break;
+    case 0xA:
+        // todo: handle input
+        break;
+    case 0x15:
+        s.delay_timer = s.v[vx];
+        break;
+    case 0x18:
+        s.sound_timer = s.v[vx];
+        break;
+    case 0x1E:
+        s.i = s.i + s.v[vx];
+        break;
+    case 0x29: {
+        uint8_t digit = s.v[vx];
+        s.i = static_cast<uint8_t>(5 * digit);
+        break;
+    }
+    case 0x33: {
+        s.memory[s.i] = s.v[vx] / 100;
+        s.memory[s.i + 1] = (s.v[vx] / 10) % 10;
+        s.memory[s.i + 2] = s.v[vx] % 10;
+        break;
+    }
+    case 0x55: {
+        for (size_t index = 0; index <= vx; ++index) {
+            s.memory[s.i + index] = s.v[index];
+        }
+        break;
+    }
+    case 0x65: {
+        for (size_t index = 0; index <= vx; ++index) {
+            s.v[index] = s.memory[s.i + index];
+        }
+        break;
+    }
+    default:
+        op_noop();
+        break;
+    }
+}

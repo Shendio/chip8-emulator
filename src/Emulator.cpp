@@ -21,7 +21,7 @@ std::expected<void, std::string> Emulator::init() {
     }
 
     // todo: don't hardcode the path, load the rom specified by the user
-    if (auto result = m_cpu.load_rom("/home/shendio/Downloads/tetris.ch8"); !result) {
+    if (auto result = m_cpu.load_rom("/home/shendio/Downloads/2-ibm-logo.ch8"); !result) {
         error_message = result.error();
         return std::unexpected(error_message);
     }
