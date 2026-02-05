@@ -31,6 +31,7 @@ public:
 
     bool get_draw_flag() const { return m_draw_flag; }
     void reset_draw_flag() { m_draw_flag = 0; }
+    std::array<uint8_t, s_display_width * s_display_height>& get_display_data() { return m_state.display; }
 
 private:
     struct State {
