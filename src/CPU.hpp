@@ -44,12 +44,8 @@ private:
 
     State m_state;
 
-    uint8_t get_x() const {
-        return m_state.opcode & 0x0F00;
-    }
-    uint8_t get_y() const {
-        return m_state.opcode & 0x00F0;
-    }
+    uint8_t get_x() const { return m_state.opcode & 0x0F00; }
+    uint8_t get_y() const { return m_state.opcode & 0x00F0; }
 
     void op_noop();
     // clang-format off

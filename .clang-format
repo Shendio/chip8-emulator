@@ -10,8 +10,8 @@ IndentWidth: 4
 UseTab: Never
 
 AlignEscapedNewlines: Left
-AllowShortFunctionsOnASingleLine: Empty
-AllowShortLambdasOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: All
+AllowShortLambdasOnASingleLine: All
 AlwaysBreakTemplateDeclarations: true
 BreakConstructorInitializers: BeforeComma
 IndentPPDirectives: AfterHash
