@@ -1,8 +1,6 @@
 #include "Emulator.hpp"
 
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_pixels.h>
-#include <SDL3/SDL_render.h>
 
 Emulator::~Emulator() {
     SDL_DestroyTexture(m_texture);
