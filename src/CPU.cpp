@@ -140,7 +140,15 @@ void CPU::op_1xxx() {
     s.pc = addr;
 }
 
-void op_2xxx();
+void CPU::op_2xxx() {
+    auto& s = m_state;
+
+    uint16_t addr = (s.opcode & 0xFFF) << 4;
+    s.sp++;
+    s.stack[s.sp] = s.pc;
+    s.pc = addr;
+}
+
 void op_3xxx();
 void op_4xxx();
 void op_5xxx();
