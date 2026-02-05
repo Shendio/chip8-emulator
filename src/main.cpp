@@ -7,7 +7,7 @@ int main(int argc, char** argv) {
 
     if (auto result = emu.init(); !result) {
         auto err_message = result.error();
-        std::println("ERROR: ", err_message);
+        std::println("ERROR: {}", err_message);
         return -1;
     }
 
