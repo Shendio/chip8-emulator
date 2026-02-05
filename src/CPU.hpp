@@ -43,4 +43,11 @@ private:
     };
 
     State m_state;
+
+    // clang-format off
+    void op_0xxx(); void op_1xxx(); void op_2xxx(); void op_3xxx();
+    void op_4xxx(); void op_5xxx(); void op_6xxx(); void op_7xxx();
+    void op_8xxx(); void op_9xxx(); void op_Axxx(); void op_Bxxx();
+    void op_Cxxx(); void op_Dxxx(); void op_Exxx(); void op_Fxxx();
+    // clang-format on
 };
