@@ -200,7 +200,62 @@ void CPU::op_7xxx() {
     s.v[vx] = s.v[vx] + kk;
 }
 
-void op_8xxx();
+void CPU::op_8xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t vy = get_y();
+
+    switch (s.opcode & 0xF) {
+    case 0x0:
+        s.v[vx] = s.v[vy];
+        break;
+    case 0x1:
+        s.v[vx] = s.v[vx] | s.v[vy];
+        break;
+    case 0x2:
+        s.v[vx] = s.v[vx] & s.v[vy];
+        break;
+    case 0x3:
+        s.v[vx] = s.v[vx] ^ s.v[vy];
+        break;
+    case 0x4: {
+        uint16_t sum = s.v[vx] + s.v[vy];
+        bool carry = sum > 255;
+        s.v[vx] = static_cast<uint8_t>(sum);
+        s.v[0xF] = carry ? 1 : 0;
+        break;
+    }
+    case 0x5: {
+        bool not_borrow = s.v[vx] <= s.v[vy];
+        s.v[vx] = s.v[vx] - s.v[vy];
+        s.v[0xF] = not_borrow;
+        break;
+    }
+    case 0x6: {
+        bool lsb = s.v[vx] & 0x1;
+        s.v[vx] /= 2;
+        s.v[0xF] = lsb;
+        break;
+    }
+    case 0x7: {
+        bool not_borrow = s.v[vy] <= s.v[vx];
+        s.v[vx] = s.v[vy] - s.v[vx];
+        s.v[0xF] = not_borrow;
+        break;
+    }
+    case 0xE: {
+        bool msb = s.v[vx] & 0x80;
+        s.v[vx] *= 2;
+        s.v[0xF] = msb;
+        break;
+    }
+    default:
+        op_noop();
+        break;
+    }
+}
+
 void op_9xxx();
 void op_Axxx();
 void op_Bxxx();
