@@ -1,6 +1,47 @@
 #include "Emulator.hpp"
 
+#include <optional>
+
 #include <SDL3/SDL.h>
+
+static std::optional<uint8_t> map_key_to_chip8(SDL_Scancode sc) {
+    switch (sc) {
+    case SDL_SCANCODE_1:
+        return 0x1;
+    case SDL_SCANCODE_2:
+        return 0x2;
+    case SDL_SCANCODE_3:
+        return 0x3;
+    case SDL_SCANCODE_4:
+        return 0xC;
+    case SDL_SCANCODE_Q:
+        return 0x4;
+    case SDL_SCANCODE_W:
+        return 0x5;
+    case SDL_SCANCODE_E:
+        return 0x6;
+    case SDL_SCANCODE_R:
+        return 0xD;
+    case SDL_SCANCODE_A:
+        return 0x7;
+    case SDL_SCANCODE_S:
+        return 0x8;
+    case SDL_SCANCODE_D:
+        return 0x9;
+    case SDL_SCANCODE_F:
+        return 0xE;
+    case SDL_SCANCODE_Z:
+        return 0xA;
+    case SDL_SCANCODE_X:
+        return 0x0;
+    case SDL_SCANCODE_C:
+        return 0xB;
+    case SDL_SCANCODE_V:
+        return 0xF;
+    default:
+        return std::nullopt;
+    }
+}
 
 Emulator::~Emulator() {
     SDL_DestroyTexture(m_texture);
@@ -53,12 +94,21 @@ void Emulator::handle_events() {
         case SDL_EVENT_QUIT:
             m_running = false;
             break;
-        case SDL_EVENT_KEY_DOWN:
+        case SDL_EVENT_KEY_UP:
+        case SDL_EVENT_KEY_DOWN: {
             if (e.key.scancode == SDL_SCANCODE_ESCAPE) {
                 m_running = false;
                 break;
             }
+
+            auto key_pressed = map_key_to_chip8(e.key.scancode);
+            if (key_pressed.has_value()) {
+                bool pressed = (e.type == SDL_EVENT_KEY_DOWN);
+                m_cpu.set_key_state(key_pressed.value(), pressed);
+            }
+
             break;
+        }
         default:
             break;
         }
