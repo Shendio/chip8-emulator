@@ -159,7 +159,17 @@ void CPU::op_3xxx() {
         s.pc += 2;
     }
 }
-void op_4xxx();
+
+void CPU::op_4xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t kk = s.opcode & 0xFF;
+
+    if (s.v[vx] != kk) {
+        s.pc += 2;
+    }
+}
 void op_5xxx();
 void op_6xxx();
 void op_7xxx();
