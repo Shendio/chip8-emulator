@@ -295,8 +295,33 @@ void CPU::op_Cxxx() {
 }
 
 void CPU::op_Dxxx() {
-    // todo: handle drawing
-    op_noop();
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t vy = get_y();
+    uint8_t height = s.opcode & 0xF;
+
+    uint8_t pos_x = s.v[vx] % s_display_width;
+    uint8_t pos_y = s.v[vy] % s_display_height;
+    s.v[0xF] = 0;
+
+    for (size_t row = 0; row < height; ++row) {
+        uint8_t sprite_byte = s.memory[s.i + row];
+        for (size_t col = 0; col < 8; ++col) {
+            bool sprite_pixel = sprite_byte & (0x80 >> col);
+            if (sprite_pixel) {
+                uint8_t screen_x = pos_x + col;
+                uint8_t screen_y = pos_y + row;
+                uint16_t pixel_index = s_display_width * screen_y + screen_x;
+
+                if (s.display[pixel_index]) {
+                    s.v[0xF] = 1;
+                }
+
+                s.display[pixel_index] ^= 1;
+            }
+        }
+    }
 }
 
 void CPU::op_Exxx() {
