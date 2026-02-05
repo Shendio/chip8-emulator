@@ -327,8 +327,25 @@ void CPU::op_Dxxx() {
 }
 
 void CPU::op_Exxx() {
-    // todo: handle input
-    op_noop();
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+
+    switch (s.opcode & 0xFF) {
+    case 0x9E:
+        if (s.key_state[vx]) {
+            s.pc += 2;
+        }
+        break;
+    case 0xA1:
+        if (!s.key_state[vx]) {
+            s.pc += 2;
+        }
+        break;
+    default:
+        op_noop();
+        break;
+    }
 }
 
 void CPU::op_Fxxx() {
@@ -340,9 +357,20 @@ void CPU::op_Fxxx() {
     case 0x7:
         s.v[vx] = s.delay_timer;
         break;
-    case 0xA:
-        // todo: handle input
+    case 0xA: {
+        bool pressed = false;
+        for (size_t i = 0; i < 16; ++i) {
+            if (s.key_state[i]) {
+                s.v[vx] = i;
+                pressed = true;
+                break;
+            }
+        }
+        if (!pressed) {
+            s.pc -= 2;
+        }
         break;
+    }
     case 0x15:
         s.delay_timer = s.v[vx];
         break;
