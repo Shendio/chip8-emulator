@@ -44,6 +44,14 @@ private:
 
     State m_state;
 
+    uint8_t get_x() const {
+        return m_state.opcode & 0x0F00;
+    }
+    uint8_t get_y() const {
+        return m_state.opcode & 0x00F0;
+    }
+
+    void op_noop();
     // clang-format off
     void op_0xxx(); void op_1xxx(); void op_2xxx(); void op_3xxx();
     void op_4xxx(); void op_5xxx(); void op_6xxx(); void op_7xxx();
