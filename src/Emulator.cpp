@@ -69,5 +69,18 @@ void Emulator::update() {
 }
 
 void Emulator::render() {
-    // todo: render the emulator here
+    if (m_cpu.get_draw_flag()) {
+        m_cpu.reset_draw_flag();
+
+        auto& display_ref = m_cpu.get_display_data();
+
+        for (size_t i = 0; i < 64 * 32; ++i) {
+            m_pixels[i] = display_ref[i] ? 0xFFFFFFFF : 0xFF000000;
+        }
+
+        SDL_UpdateTexture(m_texture, nullptr, m_pixels.data(), 64 * sizeof(uint32_t));
+        SDL_RenderClear(m_renderer);
+        SDL_RenderTexture(m_renderer, m_texture, nullptr, nullptr);
+        SDL_RenderPresent(m_renderer);
+    }
 }
