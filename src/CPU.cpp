@@ -137,14 +137,14 @@ void CPU::op_0xxx() {
 void CPU::op_1xxx() {
     auto& s = m_state;
 
-    uint16_t addr = (s.opcode & 0xFFF) << 4;
+    uint16_t addr = s.opcode & 0xFFF;
     s.pc = addr;
 }
 
 void CPU::op_2xxx() {
     auto& s = m_state;
 
-    uint16_t addr = (s.opcode & 0xFFF) << 4;
+    uint16_t addr = s.opcode & 0xFFF;
     s.sp++;
     s.stack[s.sp] = s.pc;
     s.pc = addr;
@@ -271,7 +271,7 @@ void CPU::op_9xxx() {
 void CPU::op_Axxx() {
     auto& s = m_state;
 
-    uint16_t addr = (s.opcode & 0xFFF) >> 4;
+    uint16_t addr = s.opcode & 0xFFF;
 
     s.i = addr;
 }
@@ -279,7 +279,7 @@ void CPU::op_Axxx() {
 void CPU::op_Bxxx() {
     auto& s = m_state;
 
-    uint16_t addr = (s.opcode & 0xFFF) >> 4;
+    uint16_t addr = s.opcode & 0xFFF;
 
     s.pc = addr + s.v[0x0];
 }
