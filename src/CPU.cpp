@@ -149,7 +149,16 @@ void CPU::op_2xxx() {
     s.pc = addr;
 }
 
-void op_3xxx();
+void CPU::op_3xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t kk = s.opcode & 0x00FF;
+
+    if (s.v[vx] == kk) {
+        s.pc += 2;
+    }
+}
 void op_4xxx();
 void op_5xxx();
 void op_6xxx();
