@@ -112,7 +112,26 @@ void CPU::step() {
     }
 }
 
-void op_0xxx();
+void CPU::op_noop() {
+    // todo: properly handle illegal instructions
+}
+
+void CPU::op_0xxx() {
+    auto& s = m_state;
+
+    switch (s.opcode & 0xFF) {
+    case 0xE0:
+        s.display.fill(false);
+        break;
+    case 0xEE:
+        s.pc = s.stack[s.sp];
+        s.sp--;
+        break;
+    default:
+        op_noop();
+        break;
+    }
+}
 void op_1xxx();
 void op_2xxx();
 void op_3xxx();
