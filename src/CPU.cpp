@@ -256,7 +256,17 @@ void CPU::op_8xxx() {
     }
 }
 
-void op_9xxx();
+void CPU::op_9xxx() {
+    auto& s = m_state;
+
+    uint8_t vx = get_x();
+    uint8_t vy = get_y();
+
+    if (s.v[vx] != s.v[vy]) {
+        s.pc += 2;
+    }
+}
+
 void op_Axxx();
 void op_Bxxx();
 void op_Cxxx();
