@@ -123,6 +123,7 @@ void CPU::op_0xxx() {
     switch (s.opcode & 0xFF) {
     case 0xE0:
         s.display.fill(false);
+        m_draw_flag = true;
         break;
     case 0xEE:
         s.pc = s.stack[s.sp];
@@ -322,6 +323,7 @@ void CPU::op_Dxxx() {
             }
         }
     }
+    m_draw_flag = true;
 }
 
 void CPU::op_Exxx() {
