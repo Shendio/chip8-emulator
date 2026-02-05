@@ -127,8 +127,11 @@ void Emulator::handle_events() {
 }
 
 void Emulator::update() {
-    // todo: do multiple instructions per frame, number of which is chosen by the user
-    m_cpu.step();
+    // todo: make the instructions per frame number modifiable by the user. current default = 10.
+    for (size_t i = 0; i < 10; ++i) {
+        m_cpu.step();
+    }
+
     m_cpu.update_timers();
 }
 
