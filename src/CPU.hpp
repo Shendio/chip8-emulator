@@ -28,6 +28,7 @@ public:
 
     std::expected<void, std::string> load_rom(const std::filesystem::path& rom_path);
     void step();
+    void update_timers();
 
     void set_key_state(size_t index, bool state) { m_state.key_state[index] = state; }
     bool get_draw_flag() const { return m_draw_flag; }

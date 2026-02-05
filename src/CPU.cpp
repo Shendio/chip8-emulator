@@ -113,6 +113,16 @@ void CPU::step() {
     }
 }
 
+void CPU::update_timers() {
+    auto& s = m_state;
+    if (s.delay_timer) {
+        s.delay_timer--;
+    }
+    if (s.sound_timer) {
+        s.sound_timer--;
+    }
+}
+
 void CPU::op_noop() {
     // todo: properly handle illegal instructions
 }
