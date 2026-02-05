@@ -2,6 +2,7 @@
 
 #include "CPU.hpp"
 
+#include <array>
 #include <expected>
 #include <string>
 
@@ -23,6 +24,8 @@ private:
     void render();
 
     CPU m_cpu;
+
+    std::array<uint32_t, 64 * 32> m_pixels{};
 
     // SDL objects
     SDL_Window* m_window;
