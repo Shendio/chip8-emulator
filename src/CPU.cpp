@@ -275,7 +275,14 @@ void CPU::op_Axxx() {
     s.i = addr;
 }
 
-void op_Bxxx();
+void CPU::op_Bxxx() {
+    auto& s = m_state;
+
+    uint16_t addr = (s.opcode & 0xFFF) >> 4;
+
+    s.pc = addr + s.v[0x0];
+}
+
 void op_Cxxx();
 void op_Dxxx();
 void op_Exxx();
