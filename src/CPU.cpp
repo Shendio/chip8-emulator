@@ -229,7 +229,7 @@ void CPU::op_8xxx() {
         break;
     }
     case 0x5: {
-        bool not_borrow = s.v[vx] <= s.v[vy];
+        bool not_borrow = s.v[vx] >= s.v[vy];
         s.v[vx] = s.v[vx] - s.v[vy];
         s.v[0xF] = not_borrow;
         break;
@@ -241,7 +241,7 @@ void CPU::op_8xxx() {
         break;
     }
     case 0x7: {
-        bool not_borrow = s.v[vy] <= s.v[vx];
+        bool not_borrow = s.v[vy] >= s.v[vx];
         s.v[vx] = s.v[vy] - s.v[vx];
         s.v[0xF] = not_borrow;
         break;
