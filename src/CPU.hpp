@@ -29,6 +29,7 @@ public:
     std::expected<void, std::string> load_rom(const std::filesystem::path& rom_path);
     void step();
 
+    void set_key_state(size_t index, bool state) { m_state.key_state[index] = state; }
     bool get_draw_flag() const { return m_draw_flag; }
     void reset_draw_flag() { m_draw_flag = 0; }
     const std::array<uint8_t, s_display_width * s_display_height>& get_display_data() { return m_state.display; }
