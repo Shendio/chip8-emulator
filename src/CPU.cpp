@@ -21,7 +21,7 @@ std::expected<void, std::string> CPU::load_rom(const std::filesystem::path& rom_
     }
 
     auto rom_size = std::filesystem::file_size(rom_path);
-    auto max_rom_size = s_memory_size - s_reserved_memory;
+    auto max_rom_size = s_memory_size - s_start_address;
 
     if (rom_size > max_rom_size) {
         err_message = std::format("The specified ROM file is too large. Size: {}", rom_size);

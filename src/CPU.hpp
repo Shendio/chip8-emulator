@@ -13,7 +13,6 @@ private:
     static constexpr size_t s_display_height = 32;
 
     static constexpr size_t s_memory_size = 4096;
-    static constexpr size_t s_reserved_memory = 512;
     static constexpr size_t s_font_size = 80;
     static constexpr size_t s_start_address = 0x200;
 
