@@ -56,58 +56,59 @@ void CPU::step() {
     s.opcode = (s.memory[s.pc] << 8) | s.memory[s.pc + 1];
     s.pc += 2;
 
-    uint16_t type = (s.opcode & 0xF000) << 12;
+    uint8_t type = (s.opcode & 0xF000) >> 12;
 
     switch (type) {
-    case 0x0000:
+    case 0x0:
         op_0xxx();
         break;
-    case 0x1000:
+    case 0x1:
         op_1xxx();
         break;
-    case 0x2000:
+    case 0x2:
         op_2xxx();
         break;
-    case 0x3000:
+    case 0x3:
         op_3xxx();
         break;
-    case 0x4000:
+    case 0x4:
         op_4xxx();
         break;
-    case 0x5000:
+    case 0x5:
         op_5xxx();
         break;
-    case 0x6000:
+    case 0x6:
         op_6xxx();
         break;
-    case 0x7000:
+    case 0x7:
         op_7xxx();
         break;
-    case 0x8000:
+    case 0x8:
         op_8xxx();
         break;
-    case 0x9000:
+    case 0x9:
         op_9xxx();
         break;
-    case 0xA000:
+    case 0xA:
         op_Axxx();
         break;
-    case 0xB000:
+    case 0xB:
         op_Bxxx();
         break;
-    case 0xC000:
+    case 0xC:
         op_Cxxx();
         break;
-    case 0xD000:
+    case 0xD:
         op_Dxxx();
         break;
-    case 0xE000:
+    case 0xE:
         op_Exxx();
         break;
-    case 0xF000:
+    case 0xF:
         op_Fxxx();
         break;
     default:
+        op_noop();
         break;
     }
 }
