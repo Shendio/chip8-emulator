@@ -118,6 +118,7 @@ void Emulator::handle_events() {
 void Emulator::update() {
     // todo: do multiple instructions per frame, number of which is chosen by the user
     m_cpu.step();
+    m_cpu.update_timers();
 }
 
 void Emulator::render() {
