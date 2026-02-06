@@ -53,28 +53,28 @@ Emulator::~Emulator() {
 }
 
 std::expected<void, std::string> Emulator::init() {
-    std::string error_message;
+    std::string err_message;
     if (!SDL_Init(SDL_INIT_VIDEO)) {
-        error_message = SDL_GetError();
-        return std::unexpected(error_message);
+        err_message = SDL_GetError();
+        return std::unexpected(err_message);
     }
 
     if (!SDL_CreateWindowAndRenderer(s_title.data(), s_width, s_height, 0, &m_window, &m_renderer)) {
-        error_message = SDL_GetError();
-        return std::unexpected(error_message);
+        err_message = SDL_GetError();
+        return std::unexpected(err_message);
     }
 
     if (m_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32); !m_texture) {
-        error_message = SDL_GetError();
-        return std::unexpected(error_message);
+        err_message = SDL_GetError();
+        return std::unexpected(err_message);
     }
 
     SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
 
     // todo: don't hardcode the path, load the rom specified by the user
     if (auto result = m_cpu.load_rom("/home/shendio/Downloads/2-ibm-logo.ch8"); !result) {
-        error_message = result.error();
-        return std::unexpected(error_message);
+        err_message = result.error();
+        return std::unexpected(err_message);
     }
 
     m_running = true;
