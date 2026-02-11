@@ -4,7 +4,25 @@ project(chip8-emulator)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(SDL3 REQUIRED)
+include(FetchContent)
+
+find_package(SDL3 QUIET)
+
+if(SDL3_FOUND)
+    message(STATUS "Using system SDL3.")
+else()
+    message(STATUS "SDL3 not found, fetching...")
+
+    set(SDL_TESTS OFF)
+
+    FetchContent_Declare(
+        SDL3
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG release-3.4.0
+        GIT_SHALLOW TRUE
+    )
+    FetchContent_MakeAvailable(SDL3)
+endif()
 
 add_executable(chip8-emulator)
 target_sources(chip8-emulator PRIVATE
