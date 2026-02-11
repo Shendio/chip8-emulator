@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Shared.hpp"
+
 #include <array>
 #include <cstddef>
 #include <cstdint>
@@ -10,9 +12,6 @@
 
 class CPU {
 private:
-    static constexpr size_t s_display_width = 64;
-    static constexpr size_t s_display_height = 32;
-
     static constexpr size_t s_memory_size = 4096;
     static constexpr size_t s_font_size = 80;
     static constexpr size_t s_start_address = 0x200;

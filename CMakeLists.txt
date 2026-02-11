@@ -13,6 +13,7 @@ target_sources(chip8-emulator PRIVATE
     src/Emulator.hpp
     src/CPU.cpp
     src/CPU.hpp
+    src/Shared.hpp
 )
 
 target_compile_features(chip8-emulator PRIVATE cxx_std_23)

@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
     auto args = std::span(argv, argc).subspan(1);
 
     std::string_view rom_path;
-    uint8_t instruction_count = 10;
+    uint8_t instruction_count = 0;
 
     for (size_t i = 0; i < args.size(); ++i) {
         std::string_view arg = args[i];

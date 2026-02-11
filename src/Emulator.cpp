@@ -1,4 +1,5 @@
 #include "Emulator.hpp"
+#include "Shared.hpp"
 
 #include <chrono>
 #include <optional>
@@ -64,17 +65,19 @@ std::expected<void, std::string> Emulator::init(const std::filesystem::path& rom
         return std::unexpected(err_message);
     }
 
-    if (m_texture = SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, 64, 32); !m_texture) {
+    m_texture =
+        SDL_CreateTexture(m_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, s_display_width, s_display_height);
+
+    if (!m_texture) {
         err_message = SDL_GetError();
         return std::unexpected(err_message);
     }
 
     if (ipf == 0) {
-        err_message = "IPF variable cannot be set to zero.";
-        return std::unexpected(err_message);
+        m_ipf = s_default_ipf;
+    } else {
+        m_ipf = ipf;
     }
-
-    m_ipf = ipf;
 
     SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
 
@@ -123,7 +126,6 @@ void Emulator::handle_events() {
                 bool pressed = (e.type == SDL_EVENT_KEY_DOWN);
                 m_cpu.set_key_state(key_pressed.value(), pressed);
             }
-
             break;
         }
         default:
@@ -146,11 +148,11 @@ void Emulator::render() {
 
         auto& display_ref = m_cpu.get_display_data();
 
-        for (size_t i = 0; i < 64 * 32; ++i) {
+        for (size_t i = 0; i < s_display_width * s_display_height; ++i) {
             m_pixels[i] = display_ref[i] ? 0xFFFFFFFF : 0xFF000000;
         }
 
-        SDL_UpdateTexture(m_texture, nullptr, m_pixels.data(), 64 * sizeof(uint32_t));
+        SDL_UpdateTexture(m_texture, nullptr, m_pixels.data(), s_display_width * sizeof(uint32_t));
         SDL_RenderClear(m_renderer);
         SDL_RenderTexture(m_renderer, m_texture, nullptr, nullptr);
         SDL_RenderPresent(m_renderer);

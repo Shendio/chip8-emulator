@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CPU.hpp"
+#include "Shared.hpp"
 
 #include <array>
 #include <expected>
@@ -20,7 +21,7 @@ public:
     Emulator() = default;
     ~Emulator();
 
-    std::expected<void, std::string> init(const std::filesystem::path& rom_path, uint8_t ipf = 10);
+    std::expected<void, std::string> init(const std::filesystem::path& rom_path, uint8_t ipf);
     void run();
 
 private:
@@ -30,8 +31,8 @@ private:
 
     CPU m_cpu;
 
-    std::array<uint32_t, 64 * 32> m_pixels{};
-    uint8_t m_ipf{};
+    std::array<uint32_t, s_display_width * s_display_height> m_pixels{};
+    uint8_t m_ipf = s_default_ipf;
 
     // SDL objects
     SDL_Window* m_window;
