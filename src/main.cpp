@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     for (size_t i = 0; i < args.size(); ++i) {
         std::string_view arg = args[i];
 
-        if (arg == "--ipf" && i + 1 <= args.size()) {
+        if (arg == "--ipf" && i + 1 < args.size()) {
             arg = args[++i];
             auto result = std::from_chars(arg.data(), arg.data() + arg.size(), instruction_count);
             if (result.ec != std::errc{}) {
