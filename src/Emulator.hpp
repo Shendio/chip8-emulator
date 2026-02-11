@@ -37,6 +37,4 @@ private:
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
     SDL_Texture* m_texture;
-
-    bool m_running = false;
 };

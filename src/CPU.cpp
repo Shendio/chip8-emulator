@@ -124,7 +124,8 @@ void CPU::update_timers() {
 }
 
 void CPU::op_noop() {
-    // todo: properly handle illegal instructions
+    auto& s = m_state;
+    s.status = CPUStatus::CRASHED;
 }
 
 void CPU::op_0xxx() {

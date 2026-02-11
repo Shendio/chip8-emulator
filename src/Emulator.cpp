@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <optional>
+#include <print>
 #include <thread>
 
 #include <SDL3/SDL.h>
@@ -86,14 +87,15 @@ std::expected<void, std::string> Emulator::init(const std::filesystem::path& rom
         return std::unexpected(err_message);
     }
 
-    m_running = true;
+    m_cpu.set_status(CPUStatus::RUNNING);
+
     return {};
 }
 
 void Emulator::run() {
     using namespace std::chrono_literals;
     constexpr auto desired_frame_time = 16.67ms;
-    while (m_running) {
+    while (m_cpu.get_status() == CPUStatus::RUNNING) {
         const auto frame_start = std::chrono::high_resolution_clock::now();
 
         handle_events();
@@ -105,6 +107,10 @@ void Emulator::run() {
             std::this_thread::sleep_for(desired_frame_time - frame_time);
         }
     }
+
+    if (m_cpu.get_status() == CPUStatus::CRASHED) {
+        std::println(stderr, "ERROR: Stopping emulator due to a CPU crash.");
+    }
 }
 
 void Emulator::handle_events() {
@@ -112,12 +118,12 @@ void Emulator::handle_events() {
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_EVENT_QUIT:
-            m_running = false;
+            m_cpu.set_status(CPUStatus::STOPPED);
             break;
         case SDL_EVENT_KEY_UP:
         case SDL_EVENT_KEY_DOWN: {
             if (e.key.scancode == SDL_SCANCODE_ESCAPE) {
-                m_running = false;
+                m_cpu.set_status(CPUStatus::STOPPED);
                 break;
             }
 

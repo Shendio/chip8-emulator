@@ -10,6 +10,8 @@
 #include <random>
 #include <string>
 
+enum class CPUStatus : uint8_t { UNINITIALIZED, RUNNING, CRASHED, STOPPED };
+
 class CPU {
 private:
     static constexpr size_t s_memory_size = 4096;
@@ -29,6 +31,8 @@ public:
     void step();
     void update_timers();
 
+    void set_status(CPUStatus status) { m_state.status = status; }
+    CPUStatus get_status() const { return m_state.status; }
     void set_key_state(size_t index, bool state) { m_state.key_state[index] = state; }
     bool get_draw_flag() const { return m_draw_flag; }
     void reset_draw_flag() { m_draw_flag = 0; }
@@ -47,6 +51,7 @@ private:
         uint8_t sp{};
         uint8_t delay_timer{};
         uint8_t sound_timer{};
+        CPUStatus status = CPUStatus::UNINITIALIZED;
     };
 
     State m_state;
