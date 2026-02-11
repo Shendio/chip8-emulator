@@ -34,7 +34,6 @@ private:
     std::array<uint32_t, s_display_width * s_display_height> m_pixels{};
     uint8_t m_ipf = s_default_ipf;
 
-    // SDL objects
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
     SDL_Texture* m_texture;
