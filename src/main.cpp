@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
             arg = args[++i];
             auto result = std::from_chars(arg.data(), arg.data() + arg.size(), instruction_count);
             if (result.ec != std::errc{}) {
-                std::println("ERROR: Invalid argument for --ipf: {}", arg);
+                std::println(stderr, "ERROR: Invalid argument for --ipf: {}", arg);
                 return -1;
             }
             continue;
@@ -37,13 +37,13 @@ int main(int argc, char** argv) {
             continue;
         }
 
-        std::println("ERROR: Invalid argument: {}", arg);
+        std::println(stderr, "ERROR: Invalid argument: {}", arg);
         return -1;
     }
 
     if (auto result = emu.init(rom_path, instruction_count); !result) {
         auto err_message = result.error();
-        std::println("ERROR: {}", err_message);
+        std::println(stderr, "ERROR: {}", err_message);
         return -1;
     }
 
