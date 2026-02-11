@@ -304,7 +304,7 @@ void CPU::op_Cxxx() {
 
     uint8_t vx = get_x();
     uint8_t kk = s.opcode & 0xFF;
-    uint8_t random_number = m_rng_dist(m_rng_gen);
+    uint8_t random_number = static_cast<uint8_t>(m_rng_dist(m_rng_gen));
 
     s.v[vx] = random_number & kk;
 }
