@@ -52,7 +52,7 @@ Emulator::~Emulator() {
     SDL_Quit();
 }
 
-std::expected<void, std::string> Emulator::init() {
+std::expected<void, std::string> Emulator::init(const std::filesystem::path& rom_path, uint8_t ipf) {
     std::string err_message;
     if (!SDL_Init(SDL_INIT_VIDEO)) {
         err_message = SDL_GetError();
@@ -69,10 +69,16 @@ std::expected<void, std::string> Emulator::init() {
         return std::unexpected(err_message);
     }
 
+    if (ipf == 0) {
+        err_message = "IPF variable cannot be set to zero.";
+        return std::unexpected(err_message);
+    }
+
+    m_ipf = ipf;
+
     SDL_SetTextureScaleMode(m_texture, SDL_SCALEMODE_NEAREST);
 
-    // todo: don't hardcode the path, load the rom specified by the user
-    if (auto result = m_cpu.load_rom("/home/shendio/Downloads/2-ibm-logo.ch8"); !result) {
+    if (auto result = m_cpu.load_rom(rom_path); !result) {
         err_message = result.error();
         return std::unexpected(err_message);
     }
@@ -127,8 +133,7 @@ void Emulator::handle_events() {
 }
 
 void Emulator::update() {
-    // todo: make the instructions per frame number modifiable by the user. current default = 10.
-    for (size_t i = 0; i < 10; ++i) {
+    for (size_t i = 0; i < m_ipf; ++i) {
         m_cpu.step();
     }
 

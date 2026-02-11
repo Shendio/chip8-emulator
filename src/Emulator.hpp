@@ -15,7 +15,7 @@ public:
     Emulator() = default;
     ~Emulator();
 
-    std::expected<void, std::string> init();
+    std::expected<void, std::string> init(const std::filesystem::path& rom_path, uint8_t ipf = 10);
     void run();
 
 private:
@@ -26,7 +26,7 @@ private:
     CPU m_cpu;
 
     std::array<uint32_t, 64 * 32> m_pixels{};
-    uint8_t m_ipf = 10;
+    uint8_t m_ipf{};
 
     // SDL objects
     SDL_Window* m_window;

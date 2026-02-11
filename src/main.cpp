@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    if (auto result = emu.init(); !result) {
+    if (auto result = emu.init(rom_path, instruction_count); !result) {
         auto err_message = result.error();
         std::println("ERROR: {}", err_message);
         return -1;
