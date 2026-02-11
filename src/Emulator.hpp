@@ -26,6 +26,7 @@ private:
     CPU m_cpu;
 
     std::array<uint32_t, 64 * 32> m_pixels{};
+    uint8_t m_ipf = 10;
 
     // SDL objects
     SDL_Window* m_window;
