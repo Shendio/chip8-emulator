@@ -48,6 +48,8 @@ std::expected<void, std::string> CPU::load_rom(const std::filesystem::path& rom_
         s.memory[s_start_address + i] = buffer[i];
     }
 
+    s.status = CPUStatus::RUNNING;
+
     return {};
 }
 

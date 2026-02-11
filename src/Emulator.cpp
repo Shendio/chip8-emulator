@@ -87,8 +87,6 @@ std::expected<void, std::string> Emulator::init(const std::filesystem::path& rom
         return std::unexpected(err_message);
     }
 
-    m_cpu.set_status(CPUStatus::RUNNING);
-
     return {};
 }
 
