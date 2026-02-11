@@ -1,4 +1,5 @@
 #include "CPU.hpp"
+#include "Font.hpp"
 
 #include <format>
 #include <fstream>
