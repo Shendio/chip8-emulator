@@ -42,3 +42,10 @@ set_target_properties(chip8-emulator PROPERTIES
     CXX_STANDARD_REQUIRED ON
     CXX_EXTENSIONS OFF
 )
+
+if(WIN32)
+    add_custom_command(TARGET chip8-emulator POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy -t $<TARGET_FILE_DIR:chip8-emulator> $<TARGET_RUNTIME_DLLS:chip8-emulator>
+        COMMAND_EXPAND_LISTS
+    )
+endif()
