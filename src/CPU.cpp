@@ -352,12 +352,12 @@ void CPU::op_Exxx() {
 
     switch (s.opcode & 0xFF) {
     case 0x9E:
-        if (s.key_state[vx]) {
+        if (s.key_state[s.v[vx] & 0xF]) {
             s.pc += 2;
         }
         break;
     case 0xA1:
-        if (!s.key_state[vx]) {
+        if (!s.key_state[s.v[vx] & 0xF]) {
             s.pc += 2;
         }
         break;
