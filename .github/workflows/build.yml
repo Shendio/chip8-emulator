@@ -6,11 +6,13 @@ on:
       - "**.md"
       - ".gitignore"
       - ".clang-format"
+      - "assets/**"
   pull_request:
     paths-ignore:
       - "**.md"
       - ".gitignore"
       - ".clang-format"
+      - "assets/**"
 
 jobs:
   build:
